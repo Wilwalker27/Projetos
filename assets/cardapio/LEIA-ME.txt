@@ -1,0 +1,13 @@
+Como publicar o cardápio em PDF
+================================
+
+1. Salve o PDF do cardápio completo nesta pasta com o nome exato:
+
+     cardapio-dgula.pdf
+
+2. Pronto — o botão "Baixar cardápio em PDF" na landing page já aponta
+   para este arquivo e passa a abrir o PDF automaticamente.
+
+Enquanto o arquivo não existir aqui, o botão mostra um aviso amigável
+("cardápio chegando em breve") e leva o cliente direto para o WhatsApp,
+então o site nunca fica com um link quebrado.

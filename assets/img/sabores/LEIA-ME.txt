@@ -1,0 +1,19 @@
+Como adicionar fotos reais dos sabores
+=======================================
+
+1. Salve a foto do sabor nesta pasta (formato .jpg ou .png, recomendado
+   pelo menos 800x600px, na horizontal).
+
+2. Abra o arquivo assets/js/flavors.js na raiz do projeto.
+
+3. Para um sabor já existente, troque o valor de "img" para o nome do
+   arquivo que você salvou aqui, por exemplo:
+
+     img: "assets/img/sabores/calabresa-acebolada.jpg"
+
+4. Para lançar um sabor novo, copie um dos blocos { ... } existentes no
+   flavors.js, ajuste nome, descrição, preço e o caminho da imagem.
+
+Se o arquivo indicado em "img" ainda não existir, o card mostra
+automaticamente uma ilustração colorida no lugar — ou seja, dá pra
+cadastrar o sabor primeiro e adicionar a foto depois, sem quebrar nada.
