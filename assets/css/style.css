@@ -167,7 +167,7 @@ button { font: inherit; cursor: pointer; }
   padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 0.85rem;
   backdrop-filter: blur(6px); margin-bottom: 20px;
 }
-.hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); font-weight: 700; margin-bottom: 18px; }
+.hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); font-weight: 700; margin-bottom: 18px; color: #fff; }
 .hero h1 .hl { color: var(--gold-400); position: relative; }
 .lead { font-size: clamp(1rem, 1.6vw, 1.15rem); color: rgba(255, 255, 255, 0.88); max-width: 46ch; margin-bottom: 26px; }
 
