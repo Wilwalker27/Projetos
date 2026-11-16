@@ -1,0 +1,91 @@
+/* COLO: o que o app acrescenta ao protótipo de referência (reference.css).
+   Aqui ficam: ajustes de plataforma (PWA, área segura, toque de 44px) e peças novas
+   que várias telas usam. Estilos de uma tela só ficam em styles/screens/<tela>.css. */
+
+/* ---------- plataforma ---------- */
+:root{
+  --font-display:"Newsreader Variable","Newsreader","Iowan Old Style",Georgia,serif;
+  --font-body:"Figtree Variable","Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;padding:0;overscroll-behavior:none}
+#root{height:100%}
+[hidden]{display:none!important}
+img{max-width:100%}
+a{color:inherit}
+a.btn{text-decoration:none}
+h1,h2,h3,p{overflow-wrap:break-word}
+
+/* aparelho instalado: respeita o entalhe e a barra de gestos */
+@media (max-width:520px){
+  .app{padding-top:env(safe-area-inset-top,0px)}
+  .device .tabbar{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  .app.notabs #screen{padding-bottom:env(safe-area-inset-bottom,0px)}
+}
+/* a coluna da marca ganhou os controles do protótipo: cabe em telas mais baixas */
+.stage{gap:64px}
+.brand-col{gap:14px}
+.bc-mark .mark{width:72px;height:72px}
+.bc-word{font-size:80px}
+.bc-lead{font-size:24px}
+@media (max-height:860px){.stage{align-items:flex-start}}
+
+/* área de toque de 44px sem mudar o desenho aprovado */
+.btn,.chip,.link,.seg button,.avatar-btn,.brandmini,.proto-seg button{position:relative}
+.btn.sm::before,.chip::before,.seg button::before,.proto-seg button::before{content:"";position:absolute;inset:-4px 0}
+.link::before,.brandmini::before{content:"";position:absolute;inset:-9px -6px}
+.avatar-btn::before{content:"";position:absolute;inset:-2px}
+
+/* o arco fecha o abraço ao tocar no botão COLO */
+.tab-colo:active .mk-arc{stroke-dasharray:92 8;transform:rotate(-6deg)}
+.tabbar.pro{grid-template-columns:repeat(4,1fr)}
+.sheet-body{display:flex;flex-direction:column;gap:12px}
+
+/* ---------- apoio de crise ---------- */
+.sos a.num{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;user-select:auto;-webkit-user-select:auto;padding:2px 1px}
+.sos.sos-sm{padding:12px 14px;border-radius:18px}
+.sos.sos-sm p{margin:0;font-size:12.5px}
+.sos.sos-risk{border:1px solid var(--peach-deep)}
+.sos-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+/* ---------- peças novas, comuns ---------- */
+/* etiqueta pequena: "Remarcado", "fictício" */
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);font-size:11.5px;font-weight:600;line-height:1.3;white-space:nowrap;flex:none}
+.tag.tone{background:var(--tint);color:var(--ink)}
+
+/* aviso suave: explica uma regra sem alarme */
+.callout{background:var(--surface-2);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.callout b{color:var(--ink);font-weight:600}
+.callout p{margin:0}
+.callout.tone{background:var(--tint)}
+
+/* linhas que abrem algo (Ajustes, Privacidade, painel) */
+.rows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);width:100%;text-align:left;min-height:48px}
+.rows>li:first-child>.row{border-top:0}
+.row>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.row b{font-weight:600;font-size:14.5px;line-height:1.3}
+.row em{font-style:normal;font-size:12.5px;color:var(--ink-2);line-height:1.4}
+.row>.ic:last-child{color:var(--ink-2)}
+
+/* campo de texto livre */
+.field{display:block;width:100%;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:14px 16px;resize:vertical;min-height:96px;line-height:1.5}
+.field:focus{outline:none;border-color:var(--clay)}
+.field::placeholder{color:var(--ink-2)}
+
+/* ---------- controles do protótipo ---------- */
+.proto-seg{display:flex;flex-wrap:wrap;gap:6px}
+.proto-seg button{padding:7px 12px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--ink-2);background:var(--bg);transition:background .25s,color .25s}
+.proto-seg button:hover{color:var(--ink)}
+.proto-seg button.on,.proto-seg button[aria-checked="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.proto-seg button:disabled{opacity:.5}
+.proto-clock{display:flex;flex-direction:column;gap:8px}
+.bc-nav .proto-clock{flex-direction:column;flex-wrap:nowrap}
+.bc-nav .link{border:0;background:none;padding:4px 0;color:var(--clay);font-size:13.5px}
+.scr .proto-seg button{padding:10px 14px;font-size:13.5px}
+.proto{border:1px dashed var(--line);border-radius:26px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.proto>h2{font-family:var(--font-display);font-weight:400;font-size:21px;margin:0}
+
+@media (prefers-reduced-motion: reduce){
+  .toast,.sheet-scrim{transition-duration:.01s}
+}
