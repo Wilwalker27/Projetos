@@ -34,6 +34,9 @@ export function StatusBar() {
   )
 }
 
+/** Como na coluna da referência: "psicóloga, toda semana". */
+const WHO = { ana: 'psicóloga', rafael: 'educador físico', julia: 'nutricionista' } as const
+
 type NavItem = { t: string; name?: RouteName; id?: string; act?: () => void }
 const NAV_ACOLHIDO: NavItem[] = [
   { t: 'Boas-vindas', name: 'welcome' }, { t: 'Personalização', name: 'onboard', id: '1' }, { t: 'Início', name: 'home' },
@@ -61,7 +64,7 @@ export function BrandCol() {
         {ORDER.map((k) => (
           <div key={k}>
             <dt><i style={colorVars(PROS[k].color)} />{PROS[k].area}</dt>
-            <dd>{plan.freq ? `${PROS[k].service}, ${plan.freq[k].label}` : PROS[k].service}</dd>
+            <dd>{plan.freq ? `${WHO[k]}, ${plan.freq[k].label}` : WHO[k]}</dd>
           </div>
         ))}
       </dl>

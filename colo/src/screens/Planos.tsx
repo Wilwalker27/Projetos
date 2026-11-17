@@ -39,8 +39,10 @@ function SubscribeSheet({ plan }: { plan: PaidPlanKey }) {
   const p = PLANS[plan]
   const [pay, setPay] = useState<'pix' | 'cartao'>('pix')
   const [tcle, setTcle] = useState(false)
-  const [checkins, setCheckins] = useState(true)
-  const [share, setShare] = useState<Record<ProKey, boolean>>({ ana: true, rafael: true, julia: true })
+  // consentimento é escolha da pessoa: nada vem ligado (LGPD)
+  const [checkins, setCheckins] = useState(false)
+  const [share, setShare] = useState<Record<ProKey, boolean>>({ ana: false, rafael: false, julia: false })
+  const [term, setTerm] = useState(false)
   const confirm = (): void => {
     const consents: Consents = { tcle: true, checkins, share }
     subscribe(plan, consents)
@@ -62,6 +64,18 @@ function SubscribeSheet({ plan }: { plan: PaidPlanKey }) {
         <input type="checkbox" checked={tcle} onChange={(e) => setTcle(e.target.checked)} />
         <span>Li e aceito o termo de consentimento para atendimento online (TCLE).</span>
       </label>
+      <button className="link" aria-expanded={term} onClick={() => setTerm(!term)}>{term ? 'Fechar o termo' : 'Ler o termo'}</button>
+      {term && (
+        <div className="callout pl-term">
+          <b>Termo de consentimento para atendimento online (texto de exemplo)</b>
+          <p>Os encontros do COLO são individuais e online, por vídeo, com profissionais cadastrados nos seus conselhos (psicologia no e-Psi, nutrição no e-Nutricionista).</p>
+          <p>O sigilo vale também online. Use um lugar reservado e uma conexão sua. Os encontros não são gravados.</p>
+          <p>O COLO não atende urgência. Em crise, ligue para o CVV no 188 ou, em emergência, para o SAMU no 192.</p>
+          <p>Você pode retirar este consentimento quando quiser, em Ajustes, e pedir seus dados ou a exclusão da conta.</p>
+          <p className="tiny">No piloto, este texto é substituído pelo termo revisado pela equipe.</p>
+        </div>
+      )}
+      <p className="tiny">As escolhas abaixo são opcionais e começam desligadas.</p>
       <label className="toggle" htmlFor="pl-ck"><span>A psicóloga pode ler meus check-ins</span><em>Antes de cada sessão. Mais ninguém vê.</em>
         <input type="checkbox" id="pl-ck" checked={checkins} onChange={(e) => setCheckins(e.target.checked)} /></label>
       {ORDER.map((k) => (
@@ -78,6 +92,7 @@ function SubscribeSheet({ plan }: { plan: PaidPlanKey }) {
 const BOTH = [
   'Tudo individual e online, por vídeo.',
   `${RULES.reschedPerMonth} remarcação por mês em cada área.`,
+  `Se faltar, dá pra remarcar em até ${RULES.missWindowH} horas. Depois disso, ou se a remarcação do mês já foi usada, o encontro fica como perdido e não é reposto, porque o horário reservado é pago ao profissional.`,
   'A psicóloga pode ajustar a frequência da psicologia, conforme o que fizer sentido pra você.',
   'Pagamento mensal por Pix Automático ou cartão, fora das lojas de aplicativo.',
   `Você pode desistir em até ${RULES.refundDays} dias e receber tudo de volta.`,

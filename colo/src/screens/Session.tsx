@@ -7,7 +7,7 @@ import { PAUSAS, PROS } from '../data/content'
 import { fmtS } from '../lib/dates'
 import { hasRisk } from '../lib/risk'
 import { back, go } from '../nav/router'
-import { addJournal, logPause } from '../state/actions'
+import { addJournal, logPause, noticeRisk } from '../state/actions'
 import { useS } from '../state/store'
 import type { Pausa } from '../types'
 import { Bar, Sos, toneVars } from '../ui/bits'
@@ -69,6 +69,8 @@ function Guided({ x }: { x: Pausa }) {
   }, [i, secs])
 
   const risk = ans.some((a) => hasRisk(a))
+  // a tela diz que a Ana é avisada: o aviso sai já, não só ao concluir
+  useEffect(() => { if (risk && sub) noticeRisk('diario') }, [risk, sub])
 
   return (
     <div className="full session" style={toneVars(x.by)}>

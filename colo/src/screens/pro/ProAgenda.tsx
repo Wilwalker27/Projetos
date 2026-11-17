@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { PROS } from '../../data/content'
 import { PLANS } from '../../data/plans'
-import { WD, WDS, addDays, cap, dLong, dShort, hm, now, sod } from '../../lib/dates'
+import { WD, WDS, addDays, cap, dLong, dShort, hm, now, sod, until } from '../../lib/dates'
 import { proSessions, type ProSess } from '../../lib/pro'
 import { MEET_DEMO, missDeadline, roomOpen, roomOpensAt } from '../../lib/sessions'
 import { go } from '../../nav/router'
@@ -33,7 +33,7 @@ function SessCard({ x }: { x: ProSess }) {
         <div className="sess-mode"><Icon n="video" sm /> Online · {MEET_DEMO} (exemplo)</div>
         {!past && <div className="sess-acts"><button className="btn soft sm" onClick={open}>Abrir chamada</button></div>}
         {s.state === 'realizado' && <div className="pr-state ok"><Icon n="check" sm /> Sessão feita</div>}
-        {s.state === 'falta' && <div className="pr-state">Faltou · pode remarcar até {hm(missDeadline(s))}</div>}
+        {s.state === 'falta' && <div className="pr-state">Faltou · pode remarcar até {until(missDeadline(s))}</div>}
         {s.state === 'perdida' && <div className="pr-state">Faltou · sessão perdida, paga a você</div>}
         {past && who.id === 'voce' && (
           <div className="seg pr-att" role="radiogroup" aria-label={`Presença de ${who.first}`}>

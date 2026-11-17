@@ -48,7 +48,7 @@ export function Chat({ id }: { id?: string }) {
         <span />
       </div>
       <p className="chat-note">{p.first} {p.reply}, {p.replyWindow.charAt(0).toLowerCase() + p.replyWindow.slice(1)}. Não é canal de urgência: se precisar agora, CVV <Cvv /> ou SAMU <Samu />.</p>
-      <MsgList msgs={S.chats[k] || []} mine="me" />
+      <MsgList msgs={S.chats[k] || []} mine="me" lead="As primeiras mensagens são de exemplo, do protótipo." />
       <Composer placeholder={`Escreva pra ${p.first}…`} label={`Mensagem para ${p.first}`} onSend={send} />
     </div>
   )

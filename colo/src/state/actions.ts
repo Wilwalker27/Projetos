@@ -1,5 +1,5 @@
 /* Ações do COLO: tudo o que muda o estado passa por aqui. */
-import { ORDER } from '../data/content'
+import { MOODS, ORDER } from '../data/content'
 import { DEMO_ACOLHIDOS } from '../data/demo'
 import { dkey, hhmm, now } from '../lib/dates'
 import { hasRisk } from '../lib/risk'
@@ -20,7 +20,8 @@ export const finishOnboarding = (): void => setS({ onboarded: true })
 /** Registra o check-in de clima de hoje. Devolve true se foi o primeiro do dia. */
 export function setMood(i: number): boolean {
   const k = dkey(now()), first = getS().moods[k] == null
-  setS((s) => ({ moods: { ...s.moods, [k]: i } }))
+  // um registro difícil segura o convite por 48 horas, mesmo que o clima do dia seja trocado depois
+  setS((s) => ({ moods: { ...s.moods, [k]: i }, hardAt: MOODS[i]?.hard ? now().getTime() : s.hardAt }))
   return first
 }
 /** Zera os combinados quando a semana vira. Chamado ao abrir o app e de tempos em tempos. */
@@ -41,9 +42,15 @@ export const logPause = (): void => setS((s) => ({ pauseLog: [...s.pauseLog, now
 /* ---------- risco ---------- */
 /** Registra o aviso de cuidado para a psicóloga (só para quem tem plano). Nunca guarda o texto. */
 function flagRisk(src: RiskAlert['src']): void {
-  if (getS().plan === 'aberto') return
-  setS((s) => ({ alerts: [...s.alerts, { d: now().getTime(), src }].slice(-20) }))
+  const s0 = getS(), t = now().getTime()
+  if (s0.plan === 'aberto') return
+  // um aviso por origem a cada 30 minutos basta: a psicóloga faz contato no mesmo dia útil
+  if (s0.alerts.some((a) => a.src === src && t - a.d < 30 * 60000)) return
+  setS((s) => ({ alerts: [...s.alerts, { d: t, src }].slice(-20) }))
 }
+/** Chamado assim que palavras de risco aparecem na escrita, antes de salvar: o aviso à psicóloga
+    não pode depender de a pessoa concluir a pausa. Nunca guarda o texto. */
+export const noticeRisk = (src: RiskAlert['src']): void => flagRisk(src)
 
 /* ---------- diário e anotações ---------- */
 /** Guarda uma entrada do diário. Devolve true se havia palavras de risco (mostre o apoio de crise). */
@@ -121,7 +128,9 @@ export function setPlan(plan: PlanKey): void {
 }
 export const pausePlan = (on: boolean): void => setS({ pausedAt: on ? now().getTime() : null })
 /** Encerra a assinatura: a pessoa continua no COLO Aberto, com diário e pausas guardados. */
-export const cancelPlan = (): void => setS({ plan: 'aberto', pausedAt: null })
+export const cancelPlan = (): void =>
+  // conta como convite recente: o próximo só depois de uma semana e de novos dias de escrita
+  setS({ plan: 'aberto', pausedAt: null, invite: { shownAt: now().getTime(), day: null, closed: true, force: false } })
 export const setConsent = (patch: Partial<Omit<Consents, 'share'>>): void => setS((s) => ({ consents: { ...s.consents, ...patch } }))
 export const setShare = (k: ProKey, on: boolean): void =>
   setS((s) => ({ consents: { ...s.consents, share: { ...s.consents.share, [k]: on } } }))
@@ -156,6 +165,13 @@ export function exportData(): string {
     consentimentos: s.consents, checkins: s.moods, combinados: s.comb, diario: s.journal, anotacoes: s.notes,
     pausasFeitas: s.pauseLog.map((t) => new Date(t).toISOString()),
     conversas: Object.fromEntries(ORDER.map((k) => [k, s.chats[k]])), remarcacoesEFaltas: s.sess,
+    notasCompartilhadasDoTrio: Object.fromEntries(ORDER.map((k) => {
+      const n = s.proNotes[`${k}:voce`]
+      return [k, n && s.consents.share[k] ? { nota: n.shared, compartilhadaEm: n.sharedAt ? new Date(n.sharedAt).toISOString() : null } : null]
+    })),
+    avisosDeCuidado: s.alerts.map((a) => ({ em: new Date(a.d).toISOString(), origem: a.src })),
+    planoEmPausaDesde: s.pausedAt ? new Date(s.pausedAt).toISOString() : null,
+    conversaDeBoasVindas: s.welcomeTalk ? new Date(s.welcomeTalk).toISOString() : null,
   }, null, 2)
 }
 /** Apaga a conta: remove tudo deste aparelho. */

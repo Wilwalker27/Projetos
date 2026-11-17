@@ -3,7 +3,7 @@
 import '../styles/screens/home.css'
 import { useEffect } from 'react'
 import { BILHETES, MOODS, ORDER, PAUSAS, PROS } from '../data/content'
-import { HOUR, WD, cap, dLong, dkey, doy, hm, now, rel } from '../lib/dates'
+import { HOUR, WD, cap, dLong, dkey, doy, hm, now, rel, until } from '../lib/dates'
 import { inviteVisible } from '../lib/invite'
 import { missDeadline, nextWith, sessionsBetween, upcoming, type Sess } from '../lib/sessions'
 import { go } from '../nav/router'
@@ -69,7 +69,7 @@ function recentMiss(S: State): Sess | undefined {
 function MissCard({ s }: { s: Sess }) {
   return (
     <section className="callout tone hm-miss" style={toneVars(s.pro)} aria-label="Encontro que você não pôde vir">
-      <p>Você não pôde vir ao encontro com {PROS[s.pro].first}. Dá pra remarcar até {hm(missDeadline(s))}.</p>
+      <p>Você não pôde vir ao encontro com {PROS[s.pro].first}. Dá pra remarcar até {until(missDeadline(s))}.</p>
       <button className="btn soft sm" onClick={() => go('agenda', { tab: true })}>Remarcar</button>
     </section>
   )
@@ -226,15 +226,13 @@ export function Home() {
         <BilheteCard S={S} />
         <QuickPauses S={S} />
         {!sub && inviteVisible(S) && <InviteCard />}
-        <button className="trio-row" onClick={() => go('trio')}>
-          <span className="avs">{ORDER.map((k) => <Av key={k} k={k} size="sm" />)}</span>
-          {sub ? (
+        {sub && (
+          <button className="trio-row" onClick={() => go('trio')}>
+            <span className="avs">{ORDER.map((k) => <Av key={k} k={k} size="sm" />)}</span>
             <span className="trio-t"><b>Seu trio</b><span>Ana, Rafael e Júlia trocam notas uma vez por mês, com a sua autorização, pra que o cuidado faça sentido junto.</span></span>
-          ) : (
-            <span className="trio-t"><b>Conheça o trio</b><span>Ana, Rafael e Júlia: uma psicóloga, um educador físico e uma nutricionista que cuidam da mesma pessoa, juntos.</span></span>
-          )}
-          <Icon n="next" />
-        </button>
+            <Icon n="next" />
+          </button>
+        )}
         <p className="footline">Você não precisa dar conta de tudo por conta própria.</p>
       </div>
     </>

@@ -1,14 +1,14 @@
 /* Jornada: o clima dos dias, as contagens do mês, o diário e as anotações.
    Para quem tem plano, também os encontros, sono e energia e as notas do trio. */
 import '../styles/screens/jornada.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MOODS, ORDER, PROS } from '../data/content'
 import { WDS, addDays, dLong, dShort, dkey, mkey, now, sod } from '../lib/dates'
 import { proNote } from '../lib/pro'
 import { hasRisk } from '../lib/risk'
 import { lastWith, sessionsBetween } from '../lib/sessions'
 import { go } from '../nav/router'
-import { addNote, removeNote } from '../state/actions'
+import { addNote, noticeRisk, removeNote } from '../state/actions'
 import { useS } from '../state/store'
 import type { ProKey } from '../types'
 import { Av, Sos, TopBar, colorVars, toneVars } from '../ui/bits'
@@ -61,6 +61,7 @@ export function Jornada() {
   const J = all ? S.journal : S.journal.slice(0, 4)
   const pauses = S.pauseLog.length
   const risk = hasRisk(text)
+  useEffect(() => { if (risk && sub) noticeRisk('anotacao') }, [risk, sub])
 
   const save = (): void => {
     if (!text.trim()) return
@@ -78,6 +79,7 @@ export function Jornada() {
 
         <section className="card">
           <div className="sec-h"><h2>Seu tempo por dentro</h2><span className="tiny">2 semanas</span></div>
+          <p className="tiny" style={{ marginTop: 4 }}>Os dias antes de você chegar são de exemplo, do protótipo.</p>
           <div className="strip">{days.map((d, i) => {
             const m = S.moods[dkey(d)], isT = i === 13
             return (
@@ -102,7 +104,7 @@ export function Jornada() {
 
         {sub && (
           <section>
-            <div className="sec-h"><h2>Encontros até aqui</h2></div>
+            <div className="sec-h"><h2>Encontros até aqui</h2><span className="tiny">histórico de exemplo</span></div>
             <div className="counts">{ORDER.map((k) => <div className="count" style={toneVars(k)} key={k}><b>{cnt[k]}</b><span>{COUNT_LABEL[k]}</span></div>)}</div>
           </section>
         )}
@@ -118,7 +120,7 @@ export function Jornada() {
 
         {sub && notas.length > 0 && (
           <section className="card">
-            <div className="sec-h"><h2>Notas do seu trio</h2></div>
+            <div className="sec-h"><h2>Notas do seu trio</h2><span className="tiny">notas de exemplo</span></div>
             <p className="tiny" style={{ marginTop: 4 }}>O resumo que cada profissional compartilha depois do encontro.</p>
             <ul className="notas">{notas.map(({ k, x, last }) => (
               <li key={k}><Av k={k} size="sm" /><div><small>{PROS[k].first} · {last ? dShort(last.date) : 'em breve'}</small><p>{x}</p></div></li>
@@ -160,7 +162,7 @@ export function Jornada() {
           <div className="jo-sos">
             {risk || flagged ? (
               <Sos v="risco">
-                {sub && flagged && <p className="tiny" style={{ marginTop: 12 }}>A Ana recebe hoje um aviso de que você pode precisar de mais cuidado. O que você escreveu continua só seu.</p>}
+                {sub && <p className="tiny" style={{ marginTop: 12 }}>A Ana recebe hoje um aviso de que você pode precisar de mais cuidado. O que você escreveu continua só seu.</p>}
               </Sos>
             ) : <Sos v="diario" />}
           </div>

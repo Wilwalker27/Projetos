@@ -5,7 +5,8 @@ import '../styles/screens/agenda.css'
 import { Fragment, useState } from 'react'
 import { ORDER, PROS } from '../data/content'
 import { RULES } from '../data/plans'
-import { HOUR, MES, WD, WDS, addDays, cap, dLong, dShort, hm, monthRange, now, rel, sameDay, sod } from '../lib/dates'
+import { hardMoodNear } from '../lib/invite'
+import { HOUR, MES, WD, WDS, addDays, cap, dLong, dShort, hm, monthRange, now, rel, sameDay, sod, until } from '../lib/dates'
 import {
   MEET_DEMO, canResched, missDeadline, reschedLeft, roomOpen, roomOpensAt, sessionsBetween, slotsFor, upcoming,
   type ReschedWhy, type Sess,
@@ -36,7 +37,7 @@ function freeSlots(S: State, s: Sess): Date[] {
 
 function reason(s: Sess, why: ReschedWhy): string {
   const p = PROS[s.pro], m = s.orig.getMonth()
-  if (why === 'sem-saldo') return `Você já usou a remarcação de ${p.service} de ${MES[m]}. Ela volta em 1 de ${MES[(m + 1) % 12]}.`
+  if (why === 'sem-saldo') return `Você já usou a remarcação de ${p.service} de ${MES[m]}. Ela volta em 1º de ${MES[(m + 1) % 12]}.`
   if (why === 'ja-remarcado') return 'Este encontro já foi remarcado uma vez, e só dá pra remarcar cada encontro uma vez.'
   if (why === 'fora-do-prazo') return `O prazo de ${RULES.missWindowH} horas para remarcar esta falta já passou.`
   return 'Este encontro já aconteceu.'
@@ -141,7 +142,7 @@ function SessCard({ s, paused }: { s: Sess; paused: boolean }) {
         {s.state === 'realizado' && !live && <div className="sess-done"><Icon n="check" sm /> Encontro realizado</div>}
         {s.state === 'falta' && (
           <>
-            <p className="ag-line">Você não pôde vir. Dá pra remarcar até {hm(missDeadline(s))}.</p>
+            <p className="ag-line">Você não pôde vir. Dá pra remarcar até {until(missDeadline(s))}.</p>
             <div className="sess-acts"><button className="btn soft sm" onClick={() => openResched(s)}>Remarcar</button></div>
           </>
         )}
@@ -185,11 +186,11 @@ function AgendaAberto({ S }: { S: State }) {
           No COLO Aberto não há encontros marcados. As pausas, o diário e o bilhete do dia continuam com você.<br />
           <button className="link" style={{ marginTop: 6 }} onClick={() => go('pausas', { tab: true })}>Ver pausas</button>
         </div>
-        <button className="trio-row" onClick={() => go('trio')}>
+        {!hardMoodNear(S) && <button className="trio-row" onClick={() => go('trio')}>
           <span className="avs">{ORDER.map((k) => <Av key={k} k={k} size="sm" />)}</span>
           <span className="trio-t"><b>Conheça o trio</b><span>Ana, Rafael e Júlia: uma psicóloga, um educador físico e uma nutricionista que cuidam da mesma pessoa, juntos.</span></span>
           <Icon n="next" />
-        </button>
+        </button>}
       </div>
     </>
   )

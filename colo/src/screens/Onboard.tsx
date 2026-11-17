@@ -44,7 +44,7 @@ export function Onboard({ id }: { id?: string }) {
       <>
         <div className="eyebrow">Antes de tudo</div>
         <h1 className="ob-h">Como você gosta que <em>te chamem</em>?</h1>
-        <p className="lead">Pode ser apelido. É assim que o seu trio vai te chamar também.</p>
+        <p className="lead">{S.plan !== 'aberto' ? 'Pode ser apelido. É assim que o seu trio vai te chamar também.' : 'Pode ser apelido. É assim que o COLO vai te chamar.'}</p>
         <label htmlFor="ob-name" className="eyebrow" style={{ position: 'absolute', left: -9999 }}>Seu nome ou apelido</label>
         <input
           id="ob-name" className="big-in" value={name} placeholder="Seu nome ou apelido" autoComplete="given-name" maxLength={30}

@@ -26,3 +26,5 @@
 .pl-check{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;cursor:pointer;font-size:14px;line-height:1.45;min-height:44px}
 .pl-check input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--clay)}
 .pl-h3{font-weight:600;font-size:13px;color:var(--ink-2);margin:6px 0 0}
+.pl-term{gap:8px}
+.pl-term p{font-size:13px}

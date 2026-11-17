@@ -130,6 +130,17 @@ describe('convite para assinar (COLO Aberto)', () => {
     expect(inviteVisible(base({ invite: iv({ shownAt: +addDays(nowD, -6), day: dkey(addDays(nowD, -6)) }) }), nowD)).toBe(false)
     expect(inviteVisible(base({ invite: iv({ shownAt: +addDays(nowD, -8), day: dkey(addDays(nowD, -8)) }) }), nowD)).toBe(true)
   })
+  it('cada novo convite pede escrita recente, não o histórico', () => {
+    const old = [...Array(7)].map((_, i) => ({ d: +addDays(nowD, -60 - i), title: 'Diário', items: [{ q: 'q', a: 'a' }] }))
+    expect(inviteVisible(base({ journal: old }), nowD)).toBe(false)
+    const shownAt = +addDays(nowD, -9)
+    expect(inviteVisible(base({ invite: iv({ shownAt, day: dkey(shownAt), closed: true }), journal: diary(5) }), nowD)).toBe(false)
+  })
+  it('check-in difícil trocado depois ainda segura o convite por 48 horas', () => {
+    const s = base({ moods: { [dkey(nowD)]: 1 }, hardAt: +nowD - 3600e3 } as Partial<State>)
+    expect(inviteVisible(s, nowD)).toBe(false)
+    expect(inviteVisible({ ...s, hardAt: +nowD - 49 * 3600e3 } as State, nowD)).toBe(true)
+  })
   it('continua visível no dia em que apareceu, até ser fechado', () => {
     expect(inviteVisible(base({ invite: iv({ shownAt: +nowD, day: dkey(nowD) }) }), nowD)).toBe(true)
     expect(inviteVisible(base({ invite: iv({ shownAt: +nowD, day: dkey(nowD), closed: true }) }), nowD)).toBe(false)
@@ -138,7 +149,7 @@ describe('convite para assinar (COLO Aberto)', () => {
 
 describe('palavras de risco', () => {
   it('detecta com acento, sem acento, maiúsculas e espaços', () => {
-    for (const t of ['quero morrer', 'QUERO   MORRER', 'não aguento mais viver', 'nao quero mais viver', 'pensei em suicídio', 'vontade de me cortar', 'queria sumir pra sempre'])
+    for (const t of ['quero morrer', 'QUERO   MORRER', 'não aguento mais viver', 'nao quero mais viver', 'pensei em suicídio', 'vontade de me cortar', 'queria sumir pra sempre', 'queria estar morta', 'pensei em tirar a própria vida', 'seria melhor se eu não existisse', 'queria dormir e não acordar'])
       expect(hasRisk(t), t).toBe(true)
   })
   it('não dispara em frases do dia a dia', () => {

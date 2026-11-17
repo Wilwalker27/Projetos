@@ -7,12 +7,13 @@ import { Icon } from './icons'
 const dayLabel = (d: number): string => { const r = rel(new Date(d)); return r === 'hoje' || r === 'ontem' ? r : dShort(new Date(d)) }
 
 /** mine: de quem é o lado direito ('me' = acolhido; 'pro' = profissional, no painel). */
-export function MsgList({ msgs, mine }: { msgs: Msg[]; mine: 'me' | 'pro' }) {
+export function MsgList({ msgs, mine, lead }: { msgs: Msg[]; mine: 'me' | 'pro'; lead?: string }) {
   const box = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => { const el = box.current; if (el) el.scrollTop = el.scrollHeight }, [msgs.length])
   let lastDay = ''
   return (
     <div className="msgs" id="msgs" aria-live="polite" ref={box}>
+      {lead && <p className="msg sys">{lead}</p>}
       {msgs.map((m, i) => {
         if (m.from === 'day') return <div className="day-sep" key={i}>{m.x}</div>
         if (m.from === 'sys') return <p className="msg sys" key={i}>{m.x}</p>

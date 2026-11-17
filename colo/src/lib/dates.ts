@@ -30,13 +30,20 @@ export const hm = (d: Date): string => d.getHours() + 'h' + (d.getMinutes() ? p2
 /** "19:05" (mensagens). */
 export const hhmm = (d: Date): string => p2(d.getHours()) + ':' + p2(d.getMinutes())
 /** "16 de novembro". */
-export const dLong = (d: Date): string => `${d.getDate()} de ${MES[d.getMonth()]}`
+const dn = (d: Date): string => (d.getDate() === 1 ? '1º' : String(d.getDate()))
+export const dLong = (d: Date): string => `${dn(d)} de ${MES[d.getMonth()]}`
 /** "16 nov". */
-export const dShort = (d: Date): string => `${d.getDate()} ${MESC[d.getMonth()]}`
+export const dShort = (d: Date): string => `${dn(d)} ${MESC[d.getMonth()]}`
 /** "hoje", "amanhã", "ontem", "em 3 dias", "há 2 dias". */
 export function rel(d: Date): string {
   const n = Math.round((sod(d).getTime() - sod(now()).getTime()) / DAY)
   return n === 0 ? 'hoje' : n === 1 ? 'amanhã' : n === -1 ? 'ontem' : n > 1 ? `em ${n} dias` : `há ${-n} dias`
+}
+/** Prazo curto: "21h" se for hoje; "amanhã, 7h" ou "sexta, 7h" se não for. */
+export function until(d: Date): string {
+  const r = rel(d)
+  if (r === 'hoje') return hm(d)
+  return `${r === 'amanhã' ? r : WD[d.getDay()]}, ${hm(d)}`
 }
 /** Segundos como "1:05". */
 export const fmtS = (s: number): string => Math.floor(s / 60) + ':' + p2(s % 60)

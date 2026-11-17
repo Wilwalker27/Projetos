@@ -58,6 +58,8 @@ export interface State {
   /** Conversas do painel com acolhidos fictícios: chave "<pro>:<acolhido>". */
   proChats: Record<string, Msg[]>
   alerts: RiskAlert[]
+  /** Último check-in difícil (chovendo ou neblina), para segurar o convite por 48 horas. */
+  hardAt: number | null
   /** Relógio do protótipo: deslocamento em ms. */
   clock: number
 }
@@ -113,7 +115,7 @@ export function fresh(): State {
     journal: [], notes: [], pauseLog: [], chats: defaultChats(), noteIdx: 0, sess: {},
     consents: { tcle: false, checkins: false, share: { ana: false, rafael: false, julia: false } },
     invite: { shownAt: null, day: null, closed: false, force: false },
-    welcomeTalk: null, proNotes: defaultProNotes(), proChats: {}, alerts: [], clock: 0,
+    welcomeTalk: null, proNotes: defaultProNotes(), proChats: {}, alerts: [], hardAt: null, clock: 0,
   }
 }
 

@@ -8,7 +8,12 @@ const TERMS = [
   'melhor morrer', 'melhor se eu morresse', 'nao quero mais viver', 'nao aguento mais viver', 'nao vale a pena viver',
   'desistir de viver', 'desistir da vida', 'sumir pra sempre', 'sumir para sempre', 'sumir de vez', 'nao acordar mais',
   'me machucar', 'me cortar', 'me ferir', 'automutil', 'overdose',
+  'se matar', 'estar morta', 'estar morto', 'propria vida', 'acabar com a vida', 'dar fim na minha vida',
+  'dar fim a minha vida', 'dar fim em tudo', 'nao quero mais estar aqui', 'nao queria mais estar aqui', 'me enforcar',
+  'me jogar da', 'me jogar de', 'me jogar na frente', 'dormir e nao acordar', 'nao existisse', 'nao existir mais',
+  'quero sumir', 'queria sumir', 'ninguem sentiria minha falta', 'ninguem ia sentir minha falta',
 ]
+/* Lista inicial, a validar com a psicóloga do piloto antes de publicar. */
 
 const norm = (s: string): string => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ')
 
