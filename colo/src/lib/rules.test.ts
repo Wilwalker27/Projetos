@@ -103,6 +103,18 @@ describe('plano em pausa', () => {
     expect(upcoming(care('inteiro', { pausedAt: +nowD }), nowD)).toEqual([])
     expect(upcoming(care('inteiro'), nowD).length).toBeGreaterThan(0)
   })
+  it('depois de retomar, o período da pausa continua sem encontros', () => {
+    const from = +new Date(2026, 10, 2), to = +new Date(2026, 10, 16)
+    const L = month(care('inteiro', { pauses: [{ from, to }] }), 2026, 10)
+    expect(L.some((s) => +s.date > from && +s.date < to)).toBe(false)
+    expect(L.some((s) => +s.date >= to)).toBe(true)
+  })
+  it('com o plano em pausa, a falta não gasta a remarcação', () => {
+    const at19 = +new Date(2026, 10, 12, 19)
+    const c = care('essencial', { pausedAt: at19 + 3600e3, sess: { 'ana-2026-11-12': { falta: true } } })
+    const s = month(c, 2026, 10, new Date(at19 + 2 * 3600e3)).find((x) => x.id === 'ana-2026-11-12')!
+    expect(canResched(c, s)).toEqual({ ok: false, why: 'pausado' })
+  })
 })
 
 describe('convite para assinar (COLO Aberto)', () => {

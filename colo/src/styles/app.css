@@ -28,7 +28,7 @@ h1,h2,h3,p{overflow-wrap:break-word}
 .bc-mark .mark{width:72px;height:72px}
 .bc-word{font-size:80px}
 .bc-lead{font-size:24px}
-@media (max-height:860px){.stage{align-items:flex-start}}
+@media (max-height:940px){.stage{align-items:flex-start}}
 
 /* área de toque de 44px sem mudar o desenho aprovado */
 .btn,.chip,.link,.seg button,.avatar-btn,.brandmini,.proto-seg button{position:relative}
@@ -38,7 +38,7 @@ h1,h2,h3,p{overflow-wrap:break-word}
 
 /* o arco fecha o abraço ao tocar no botão COLO */
 .tab-colo:active .mk-arc{stroke-dasharray:92 8;transform:rotate(-6deg)}
-.tabbar.pro{grid-template-columns:repeat(4,1fr)}
+.tabbar-pro{grid-template-columns:repeat(4,1fr)}
 .sheet-body{display:flex;flex-direction:column;gap:12px}
 
 /* ---------- apoio de crise ---------- */
@@ -63,7 +63,7 @@ a.num{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text
 .rows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);width:100%;text-align:left;min-height:48px}
 .rows>li:first-child>.row{border-top:0}
-.row>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.row>span:not(.av){display:flex;flex-direction:column;gap:2px;min-width:0}
 .row b{font-weight:600;font-size:14.5px;line-height:1.3}
 .row em{font-style:normal;font-size:12.5px;color:var(--ink-2);line-height:1.4}
 .row>.ic:last-child{color:var(--ink-2)}

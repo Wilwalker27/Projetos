@@ -30,7 +30,7 @@ function SessCard({ x }: { x: ProSess }) {
       <div className="sess-main">
         <div className="sess-k pr-k"><i />{who.name}{who.fict && <Tag>fictício</Tag>}{s.moved && <Tag tone>Remarcado</Tag>}</div>
         <div className="sess-who">{s.kind} · {PLANS[who.plan].name}</div>
-        <div className="sess-mode"><Icon n="video" sm /> Online · {MEET_DEMO} (exemplo)</div>
+        <div className="sess-mode pr-mode"><Icon n="video" sm /><span>Online · {MEET_DEMO} (exemplo)</span></div>
         {!past && <div className="sess-acts"><button className="btn soft sm" onClick={open}>Abrir chamada</button></div>}
         {s.state === 'realizado' && <div className="pr-state ok"><Icon n="check" sm /> Sessão feita</div>}
         {s.state === 'falta' && <div className="pr-state">Faltou · pode remarcar até {until(missDeadline(s))}</div>}
@@ -51,8 +51,9 @@ export function ProAgenda() {
   const pro = S.proAs, p = PROS[pro]
   const n = now(), today = sod(n)
   const [selTs, setSel] = useState<number | null>(null)
-  const sel = selTs != null ? new Date(selTs) : today
   const mon = addDays(today, -((today.getDay() + 6) % 7))
+  // o relógio do protótipo pode ter avançado: um dia fora desta semana volta para hoje
+  const sel = selTs != null && selTs >= +mon && selTs < +addDays(mon, 7) ? new Date(selTs) : today
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => addDays(mon, i))
   const all = proSessions(S, pro, mon, addDays(mon, 7))
   const onDay = (d: Date): ProSess[] => all.filter((x) => +sod(x.s.date) === +d)

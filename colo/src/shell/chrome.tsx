@@ -104,7 +104,7 @@ function Tab({ name, ic, t }: { name: RouteName; ic: IconName; t: string }) {
 export function TabBar({ hidden }: { hidden: boolean }) {
   const S = useS()
   if (S.view === 'pro') return (
-    <nav className="tabbar pro" aria-label="Navegação do painel" hidden={hidden}>
+    <nav className="tabbar tabbar-pro" aria-label="Navegação do painel" hidden={hidden}>
       <Tab name="pro" ic="cal" t="Agenda" />
       <Tab name="pro-acolhidos" ic="users" t="Acolhidos" />
       <Tab name="pro-conversas" ic="chat" t="Conversas" />

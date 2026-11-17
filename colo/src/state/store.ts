@@ -29,6 +29,8 @@ export interface State {
   plan: PlanKey
   /** Momento em que o plano foi pausado, ou null. */
   pausedAt: number | null
+  /** Pausas já encerradas (de, até). Os encontros desses períodos não existem. */
+  pauses: { from: number; to: number }[]
   /** Lado do protótipo: acolhido ou painel do profissional. */
   view: ViewKey
   /** Profissional em uso no painel. */
@@ -109,7 +111,7 @@ export function fresh(): State {
   return {
     v: 1,
     onboarded: false, name: '', focuses: ['mente', 'dormir'], time: 'noite', tone: 'delicada', theme: 'auto', calm: true,
-    plan: 'aberto', pausedAt: null, view: 'acolhido', proAs: 'ana',
+    plan: 'aberto', pausedAt: null, pauses: [], view: 'acolhido', proAs: 'ana',
     since: today.getTime() - 57 * DAY,
     moods, comb: { ana: 2, rafael: 2, julia: 3 }, combDay: {}, combWeek: weekKey(today),
     journal: [], notes: [], pauseLog: [], chats: defaultChats(), noteIdx: 0, sess: {},

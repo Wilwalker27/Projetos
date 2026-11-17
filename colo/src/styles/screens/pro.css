@@ -32,3 +32,6 @@
 .pr-by span:last-child{color:var(--ink-2);font-size:13px;text-align:right}
 .pr-prev{display:block;color:var(--ink-2);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pr-month{--tint:var(--peach-tint)}
+.pr-mode{align-items:flex-start}
+.pr-mode>span{min-width:0;overflow-wrap:anywhere}
+.pr-mode .ic{margin-top:1px}

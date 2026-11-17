@@ -18,6 +18,8 @@ export interface Care {
   plan: PlanKey
   since: number
   pausedAt: number | null
+  /** Pausas já encerradas: nenhum encontro existe dentro delas. */
+  pauses?: { from: number; to: number }[]
   sess: Record<string, SessOv>
   schedule?: Schedule
 }
@@ -109,6 +111,7 @@ export function sessionsBetween(care: Care, a: Date, b: Date, nowD: Date = now()
       const date = ov?.to != null ? new Date(ov.to) : orig
       if (date < a || date >= b) continue
       if (care.pausedAt != null && date.getTime() > care.pausedAt) continue
+      if (care.pauses?.some((p) => date.getTime() > p.from && date.getTime() < p.to)) continue
       out.push({
         id, pro, date, orig, dur: DUR[pro], kind: KIND[pro], mode: 'Online, por vídeo', ic: 'video',
         moved: ov?.to != null, state: stateOf(care, id, pro, date, orig, nowD),
@@ -126,12 +129,14 @@ export const nextWith = (care: Care, k: ProKey, nowD: Date = now()): Sess | unde
 export const lastWith = (care: Care, k: ProKey, nowD: Date = now()): Sess | undefined =>
   sessionsBetween(care, addDays(nowD, -45), nowD, nowD).filter((s) => s.pro === k && s.state === 'realizado').pop()
 
-export type ReschedWhy = 'realizado' | 'ja-remarcado' | 'sem-saldo' | 'fora-do-prazo'
+export type ReschedWhy = 'realizado' | 'ja-remarcado' | 'sem-saldo' | 'fora-do-prazo' | 'pausado'
 export type ReschedCheck = { ok: true } | { ok: false; why: ReschedWhy }
 
 /** Pode remarcar este encontro agora? Vale para encontro futuro e para falta dentro das 12 horas. */
 export function canResched(care: Care, s: Sess): ReschedCheck {
   if (s.state === 'realizado') return { ok: false, why: 'realizado' }
+  // em pausa não há horários para onde levar o encontro: a remarcação não pode ser gasta à toa
+  if (care.pausedAt != null) return { ok: false, why: 'pausado' }
   if (s.moved) return { ok: false, why: 'ja-remarcado' }
   if (reschedLeft(care, s.pro, s.orig) <= 0) return { ok: false, why: 'sem-saldo' }
   if (s.state === 'perdida') return { ok: false, why: 'fora-do-prazo' }

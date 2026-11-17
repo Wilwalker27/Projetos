@@ -53,7 +53,7 @@ export interface GoOpts {
 export function go(name: RouteName, o: GoOpts = {}): void {
   const next: Route = { name, id: o.id }
   const same = next.name === cur.name && next.id === cur.id
-  const d = o.tab ? 0 : o.replace ? depth : depth + 1
+  const d = o.tab ? 0 : o.replace || same ? depth : depth + 1
   try {
     if (o.replace || same) hist()?.replaceState({ d }, '', toHash(next))
     else hist()?.pushState({ d }, '', toHash(next))

@@ -126,7 +126,12 @@ export function setPlan(plan: PlanKey): void {
   const s = getS()
   setS({ plan, pausedAt: null, consents: plan !== 'aberto' && !s.consents.tcle ? ALL_CONSENTS : s.consents })
 }
-export const pausePlan = (on: boolean): void => setS({ pausedAt: on ? now().getTime() : null })
+export function pausePlan(on: boolean): void {
+  const s = getS(), t = now().getTime()
+  if (on) { if (s.pausedAt == null) setS({ pausedAt: t }); return }
+  // retomar fecha o intervalo da pausa em vez de apagá-lo: o que ficou para trás não vira encontro
+  if (s.pausedAt != null) setS({ pausedAt: null, pauses: [...s.pauses, { from: s.pausedAt, to: t }].slice(-24) })
+}
 /** Encerra a assinatura: a pessoa continua no COLO Aberto, com diário e pausas guardados. */
 export const cancelPlan = (): void =>
   // conta como convite recente: o próximo só depois de uma semana e de novos dias de escrita

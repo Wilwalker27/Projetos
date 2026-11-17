@@ -95,16 +95,27 @@ intervalo do convite), altere `src/data/plans.ts`. As telas leem de lá.
   O preço só aparece na tela de Planos e no cartão "Seu plano", em Ajustes.
 - **Faltas e remarcações**: 1 remarcação por mês em cada área; quem falta tem 12 horas para
   remarcar; falta depois de remarcar é perdida; sessão perdida é paga ao profissional —
-  `lib/sessions.ts`, com testes em `lib/sessions.test.ts`.
+  `lib/sessions.ts`. Testes de todas as regras em `lib/rules.test.ts` (`npm test`).
 - **Convite para assinar**: no máximo 1 por semana, só depois de 7 dias de diário, nunca perto
   de um check-in difícil (chovendo ou neblina) — `lib/invite.ts`.
 - **Crise**: CVV 188 e SAMU 192 no botão COLO, em Ajustes e em toda tela de diário e de
   anotação. Palavras de risco mostram o apoio na hora; para quem tem plano, a psicóloga recebe
-  um aviso sem o texto — `lib/risk.ts`, `ui/bits.tsx` (`Sos`).
+  um aviso sem o texto, assim que as palavras aparecem — `lib/risk.ts`, `ui/bits.tsx` (`Sos`).
+  A lista de palavras é inicial e precisa ser validada pela psicóloga antes de publicar.
 - **Dados (LGPD)**: consentimento por área, notas privadas por profissional, exportar dados e
   apagar conta — tela de Privacidade.
 - **Vocabulário**: "acolhido" (nunca cliente ou paciente), "plano de cuidado" ou "assinatura"
   (nunca "plano de saúde"), sem depoimentos.
+
+## Antes de publicar
+
+Além das decisões em aberto do briefing (marca, Asaas com CPF, contador), o protótipo deixa
+estes pontos para a equipe:
+
+- validar com a psicóloga a lista de palavras de risco (`src/lib/risk.ts`);
+- trocar o texto de exemplo do termo de consentimento (tela de Planos) pelo termo revisado;
+- trocar a equipe fictícia, os registros e os horários de resposta pelos reais (`src/data/content.ts`);
+- conferir o contraste de alguns tons da paleta (texto claro sobre pêssego e névoa) para AA.
 
 ## O que é simulado
 

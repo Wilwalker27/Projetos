@@ -78,7 +78,7 @@ function BreatheRun({ short }: { short: boolean }) {
             {done == null ? `${brd} respirações · cerca de ${Math.max(1, Math.round(brd * 11 / 60))} min` : `Respiração ${done + 1} de ${brd}`}
           </p>
           <button className="btn primary" id="br-go" onClick={toggle}>
-            {run ? <><Icon n="pause" sm /> Pausar</> : <><Icon n="play" sm /> {done ? 'Continuar' : 'Começar'}</>}
+            {run ? <><Icon n="pause" sm /> Pausar</> : <><Icon n="play" sm /> {done != null ? 'Continuar' : 'Começar'}</>}
           </button>
           <p className="br-why">Respirar devagar, perto de seis vezes por minuto, costuma desacelerar o coração e acalmar o corpo. Inspire pelo nariz e solte pela boca, sem forçar.</p>
         </div>

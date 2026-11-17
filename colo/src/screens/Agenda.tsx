@@ -39,6 +39,7 @@ function reason(s: Sess, why: ReschedWhy): string {
   const p = PROS[s.pro], m = s.orig.getMonth()
   if (why === 'sem-saldo') return `Você já usou a remarcação de ${p.service} de ${MES[m]}. Ela volta em 1º de ${MES[(m + 1) % 12]}.`
   if (why === 'ja-remarcado') return 'Este encontro já foi remarcado uma vez, e só dá pra remarcar cada encontro uma vez.'
+  if (why === 'pausado') return 'Seu plano está em pausa. Quando você retomar, em Ajustes, dá pra escolher um novo horário.'
   if (why === 'fora-do-prazo') return `O prazo de ${RULES.missWindowH} horas para remarcar esta falta já passou.`
   return 'Este encontro já aconteceu.'
 }

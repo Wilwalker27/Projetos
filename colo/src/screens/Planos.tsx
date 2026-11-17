@@ -103,7 +103,8 @@ const BOTH = [
 export function Planos() {
   const S = useS()
   const [sel, setSel] = useState<PaidPlanKey>('essencial')
-  const talk = S.welcomeTalk != null ? new Date(S.welcomeTalk) : null
+  // conversa que já passou some daqui, como na Agenda: dá pra marcar outra
+  const talk = S.welcomeTalk != null && S.welcomeTalk > now().getTime() ? new Date(S.welcomeTalk) : null
   return (
     <>
       <TopBar />
@@ -114,7 +115,7 @@ export function Planos() {
           {PAID_PLANS.map((k) => {
             const p = PLANS[k], on = sel === k
             return (
-              <button className="pl-card" key={k} aria-pressed={on} onClick={() => setSel(k)} aria-label={`${p.name}, ${brl(p.price)} por mês`}>
+              <button className="pl-card" key={k} aria-pressed={on} onClick={() => setSel(k)}>
                 <span className="pl-name">{p.name}</span>
                 <span className="pl-price">{brl(p.price)}<small>/mês</small></span>
                 <span className="pl-freq">
