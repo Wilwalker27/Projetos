@@ -1,0 +1,34 @@
+/* Painel do profissional (versão mínima do piloto): só o que é novo. */
+.pr-brand{display:flex;align-items:center;gap:10px}
+.pr-me{box-shadow:inset 0 0 0 1.5px var(--tone);background:var(--tint);font-family:var(--font-display);font-size:18px;font-weight:400}
+.pr-who{--tint:var(--peach-tint);--tone:var(--peach-deep)}
+.pr-card{display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:26px;border:1px solid var(--line);background:var(--surface);text-align:left;width:100%}
+.pr-head{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.pr-head b{display:block;font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.15}
+.pr-head em{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.pr-head>.ic{color:var(--ink-2)}
+.pr-tags{display:flex;flex-wrap:wrap;gap:6px}
+.pr-line{font-size:13.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.pr-card .strip,.pr-box .strip{margin-top:0}
+.pr-box{display:flex;flex-direction:column;gap:12px}
+.pr-box .eyebrow{margin-bottom:-4px}
+.pr-comb{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center}
+.pr-note{display:flex;flex-direction:column;gap:10px}
+.pr-note .btn{align-self:flex-start}
+.pr-trio{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.pr-trio li{display:grid;grid-template-columns:32px 1fr;gap:12px}
+.pr-trio small{color:var(--ink-2);font-size:12px;font-weight:500}
+.pr-trio p{margin:2px 0 0;font-size:14px;line-height:1.5}
+.pr-state{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink-2);margin-top:4px}
+.pr-state.ok{color:var(--clay);font-weight:500}
+.pr-att{margin-top:8px;max-width:240px}
+.pr-k{flex-wrap:wrap}
+.pr-alert{border:1px solid var(--peach-deep)}
+.pr-alert .sos-acts{margin-top:12px}
+.pr-total{font-family:var(--font-display);font-size:46px;font-weight:300;letter-spacing:-.02em;line-height:1;margin:8px 0 12px}
+.pr-by{list-style:none;margin:8px 0 0;padding:0}
+.pr-by li{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.pr-by li:first-child{border-top:0}
+.pr-by span:last-child{color:var(--ink-2);font-size:13px;text-align:right}
+.pr-prev{display:block;color:var(--ink-2);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr-month{--tint:var(--peach-tint)}

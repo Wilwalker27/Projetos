@@ -89,3 +89,6 @@ a.num{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text
 @media (prefers-reduced-motion: reduce){
   .toast,.sheet-scrim{transition-duration:.01s}
 }
+
+/* texto só para leitores de tela */
+.sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
