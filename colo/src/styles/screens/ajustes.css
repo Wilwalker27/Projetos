@@ -1,0 +1,13 @@
+/* Ajustes e Privacidade: só o que é novo. */
+.aj-free h2{font-family:var(--font-display);font-weight:400;font-size:26px;margin:6px 0 4px;line-height:1.1}
+.aj-free p{margin:0 0 8px;color:var(--ink-2)}
+.aj-rows{padding:6px 18px}
+.aj-rows+.tiny{margin-top:-8px}
+.pv-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.pv-list li{display:grid;grid-template-columns:17px 1fr;gap:10px;align-items:start}
+.pv-list .ic{color:var(--clay);margin-top:2px}
+.pv-set{gap:16px}
+.pv-term{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.pv-term span{font-weight:600;font-size:14.5px}
+.pv-term em{font-style:normal;font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;gap:5px}
+.row.danger b{color:var(--clay)}

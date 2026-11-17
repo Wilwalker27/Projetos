@@ -42,7 +42,7 @@ h1,h2,h3,p{overflow-wrap:break-word}
 .sheet-body{display:flex;flex-direction:column;gap:12px}
 
 /* ---------- apoio de crise ---------- */
-.sos a.num{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;user-select:auto;-webkit-user-select:auto;padding:2px 1px}
+a.num{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;user-select:auto;-webkit-user-select:auto;padding:2px 1px}
 .sos.sos-sm{padding:12px 14px;border-radius:18px}
 .sos.sos-sm p{margin:0;font-size:12.5px}
 .sos.sos-risk{border:1px solid var(--peach-deep)}

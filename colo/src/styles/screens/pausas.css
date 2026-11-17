@@ -1,0 +1,14 @@
+/* Pausas, Respiração 5,5 e pausa guiada: o que estas telas acrescentam ao protótipo de
+   referência (prefixo pa-). Só tokens. Nada aqui se move. */
+
+/* rótulo do campo de escrita, só para leitores de tela (o título do passo já está à vista) */
+.pa-sr{position:absolute;left:-9999px}
+
+/* telas de escrita: quem vê o texto, e o apoio de crise logo abaixo do campo */
+.pa-priv{margin-top:-2px;max-width:44ch}
+.session .sp-step>.sos{margin-top:4px}
+.session .sos-risk>.tiny{margin-top:12px;font-size:12.5px}
+
+/* "Pronto.": o foco chega no título sem desenhar contorno (não é um controle) */
+.fin-t:focus{outline:none}
+.fin>.sos{margin-top:10px}
