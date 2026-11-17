@@ -1,0 +1,16 @@
+/* Início: o que a tela acrescenta ao protótipo de referência (prefixo hm-). Só tokens. */
+
+/* avisos com uma ação: texto em cima, botão alinhado à esquerda */
+.hm-miss,.hm-paused{align-items:flex-start;gap:10px;border-radius:24px;padding:16px 18px}
+.hm-miss p,.hm-paused p{color:var(--ink)}
+.hm-miss .btn.soft{background:var(--surface)}
+.hm-paused .link{padding:2px 0}
+
+/* convite sutil do COLO Aberto: parente do bilhete (.note), com o canto dobrado do outro lado */
+.hm-invite{position:relative;overflow:hidden;background:var(--note);border:1px solid var(--line);border-radius:28px 28px 28px 6px;padding:20px 20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+/* o arco aberto da marca, bem ao fundo */
+.hm-invite::after{content:"";position:absolute;right:-52px;top:-58px;width:150px;height:150px;border-radius:50%;border:16px solid var(--peach);opacity:.2;pointer-events:none}
+.hm-invite>*{position:relative;z-index:1}
+.hm-invite-h{font-family:var(--font-display);font-weight:300;font-style:italic;font-size:24px;line-height:1.2;letter-spacing:-.01em;margin:6px 0 0;max-width:17ch;text-wrap:balance}
+.hm-invite-p{margin:0;color:var(--ink-2);font-size:14px;line-height:1.5;max-width:38ch}
+.hm-invite-acts{display:flex;flex-wrap:wrap;gap:4px 8px;margin-top:8px}

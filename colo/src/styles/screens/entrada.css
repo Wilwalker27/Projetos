@@ -1,0 +1,9 @@
+/* Boas-vindas e Personalização: só o que não existe na referência (prefixo .ent-). */
+
+/* Passo "pronto" no COLO Aberto: ícone num círculo de 40px, no lugar do avatar do trio. */
+.ent-ic{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--peach-tint);color:var(--ink);flex:none}
+.ent-ic .ic{width:20px;height:20px}
+
+/* Linha que fecha a lista, com a mesma borda e o mesmo respiro das linhas de cima.
+   A margem negativa desconta o gap de 14px do .ob-body. */
+.ent-free{margin-top:-14px;border-top:1px solid var(--line);padding-top:12px}
